@@ -1,11 +1,12 @@
 import { useParams } from 'react-router-dom';
-import { Link, Redirect } from 'react-router-dom';
+import { v4 as uuid } from 'uuid';
 import './dog-details.scss';
 
 export default function DogDetails({ dogs }) {
   const { name } = useParams();
-  const dog = dogs.find((dog) => dog.name.toLowerCase() === name.toLowerCase());
-  console.log(dog);
+  const dog = dogs.find((dog) =>
+    dog.name.toLowerCase() === name.toLowerCase() ? dog : null
+  );
 
   return (
     <div className="dog-details">
@@ -20,7 +21,9 @@ export default function DogDetails({ dogs }) {
       </div>
       <div className="dog-facts">
         {dog.facts.map((fact) => (
-          <li className="fact">{fact}</li>
+          <li key={uuid()} className="fact">
+            {fact}
+          </li>
         ))}
       </div>
     </div>
